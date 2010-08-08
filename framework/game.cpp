@@ -1,6 +1,10 @@
 
 
-#include "def.h"
+//#include "def.h"
+#include "types.h"
+#include "game.h"
+
+
 
 Game *Game::pinst = NULL;
 

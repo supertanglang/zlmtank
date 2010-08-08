@@ -1,4 +1,5 @@
-#include "def.h"
+#include "types.h"
+#include "world.h"
 
 world::world()
 {

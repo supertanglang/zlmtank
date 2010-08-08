@@ -1,4 +1,6 @@
-#include "def.h"
+//#include "def.h"
+#include "scene.h"
+
 
 scene::scene()
 {

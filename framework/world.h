@@ -1,5 +1,7 @@
 #ifndef _MAP_H
 #define _MAP_H
+#include <include\box2d.h>
+#include "b2obj.h"
 
 #define WORLDDEF_NAME  32
 typedef struct _WorldDef

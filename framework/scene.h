@@ -1,6 +1,10 @@
 #ifndef _SCENE_H
 #define _SCENE_H
 
+#include "obj.h"
+#include "gui.h"
+#include <list>
+
 typedef std::list<obj *>::iterator OBJ_LSIT_ITR;
 typedef std::list<GUIApp *>::iterator GUIAPP_LSIT_ITR;
 class scene
@@ -23,8 +27,8 @@ public:
     BOOL InsertGUIApp(GUIApp *);
 
     //interface
-    virtual BOOL Entry(){return true;};
-	virtual BOOL Leave(){return true;};
+    virtual bool Entry(){return true;};
+	virtual bool Leave(){return true;};
     virtual void PreUpdate(float d){return;};
     virtual void PostUpdate(float d){return;};
     virtual void PreRender(float d){return;};
