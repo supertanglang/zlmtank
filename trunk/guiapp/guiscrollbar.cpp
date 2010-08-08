@@ -1,4 +1,7 @@
-#include "def.h"
+//#include "def.h"
+#include "guiscrollbar.h"
+
+
 GUIAppScrollBar::GUIAppScrollBar(int _id, ScrollDir dir, float sx, float sy, float l, const char *btn1f, const char *btn2f, const char *btn3f ) : GUIAppObject() {   
     bStatic=false;   
     bVisible=true;   

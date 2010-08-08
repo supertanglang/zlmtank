@@ -1,4 +1,4 @@
-#include "def.h" 
+#include "guiedit.h" 
    
 GUIAppEdit::GUIAppEdit(int _id, float x, float y, float w,hgeFont* fnt,  DWORD flags, DWORD max_text) {   
     bStatic = false;   

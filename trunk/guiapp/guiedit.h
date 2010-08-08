@@ -1,6 +1,9 @@
 #ifndef __GUIAPPEDIT_H__ 
 #define __GUIAPPEDIT_H__ 
  
+#include "guiobj.h"
+#include "hge.h" 
+#include "hgefont.h" 
  #define GUIAPPEDIT_MAX_TEXT_LEN  1024
 
 #define GUIAPPEDIT_FLAGS_NOMARL       0

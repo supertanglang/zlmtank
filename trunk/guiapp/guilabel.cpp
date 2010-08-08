@@ -1,4 +1,5 @@
-#include "def.h"    
+//#include "def.h" 
+#include "guilabel.h"   
    
 GUIAppLabel::GUIAppLabel(int _id, float x, float y, hgeFont *fnt, char* text, DWORD color, int align) : GUIAppObject () {   
     bStatic=true;   

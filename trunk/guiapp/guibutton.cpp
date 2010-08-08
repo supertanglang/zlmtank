@@ -1,4 +1,5 @@
-#include "def.h"
+#include "hge.h"
+#include "guibutton.h"
    
 GUIAppButton::GUIAppButton(int _id, float x, float y, const char *file) : GUIAppObject () {   
     id=_id;   
