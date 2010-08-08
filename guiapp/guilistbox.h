@@ -2,7 +2,13 @@
 #define __GUIAPPLISTBOX_H__ 
 
 
-
+#include "hge.h" 
+#include "hgefont.h" 
+#include "hgevector.h" 
+#include "m_str.h"
+#include "m_list.h"
+#include "guiobj.h"
+#include "guiscrollbar.h"
 
 class GUIAppListBox : public GUIAppObject { 
 protected: 

@@ -1,4 +1,5 @@
-#include "def.h"    
+//#include "def.h"    
+#include "guilistbox.h"  
    
 GUIAppListBox::GUIAppListBox ( int _id, float x, float y, float w, float h,   
                                const char *btn11, const char *btn12, const char *btn13,    

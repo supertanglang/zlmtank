@@ -40,7 +40,7 @@ template <class Type>
 class TFind {
 public:
 
-	virtual bool Is(Type*elem) = NULL;
+	virtual bool Is(Type*elem) = 0;
 };
 
 
@@ -51,7 +51,7 @@ public:
 	* 
 	* @param elem ύλ
 	*/
-	virtual void Do(Type*elem) = NULL;
+	virtual void Do(Type*elem) = 0;
 };
 
 

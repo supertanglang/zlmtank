@@ -1,6 +1,7 @@
 #ifndef __GUIAPPOBJ_H__ 
 #define __GUIAPPOBJ_H__ 
- 
+
+#include "hgegui.h" 
 
 class GUIAppWindow; 
  

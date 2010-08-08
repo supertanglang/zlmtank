@@ -1,8 +1,12 @@
 #ifndef __GUIAPPLABEL_H__ 
 #define __GUIAPPLABEL_H__ 
  
+#include "guiobj.h"
+#include "hge.h" 
+#include "hgefont.h" 
+#include "hgevector.h" 
+#include "m_str.h"
 
- 
 class GUIAppLabel : public GUIAppObject { 
 public: 
 	GUIAppLabel(int id, float x, float y, hgeFont *fnt, char* text, DWORD color = 0xFFFFFFFF, int align = HGETEXT_LEFT); 

@@ -1,5 +1,7 @@
 #ifndef __GUIAPPBUTTON_H__ 
 #define __GUIAPPBUTTON_H__ 
+#include "hge.h"
+#include "guiobj.h" 
  
 class GUIAppButton : public GUIAppObject { 
 public: 

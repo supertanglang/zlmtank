@@ -1,7 +1,9 @@
 #ifndef __GUIAPPWINDOW_H__ 
 #define __GUIAPPWINDOW_H__ 
  
-
+#include "guiobj.h"
+#include "m_list.h"
+#include "hge.h"
  
 class GUIApp; 
  

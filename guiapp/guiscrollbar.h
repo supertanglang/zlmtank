@@ -1,6 +1,7 @@
 #ifndef __GUIAPPSCROLLBAR_H__ 
 #define __GUIAPPSCROLLBAR_H__ 
  
+ #include "guibutton.h"
  
 class GUIAppScrollBar : public GUIAppObject { 
 protected: 

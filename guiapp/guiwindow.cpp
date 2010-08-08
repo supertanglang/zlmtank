@@ -1,4 +1,5 @@
-#include "def.h"  
+//#include "def.h"  
+#include "guiwindow.h"  
    
 void GUIAppWindow::SetupSize(float x, float y, float w, float h ) {   
     rect.x1 = x;   
