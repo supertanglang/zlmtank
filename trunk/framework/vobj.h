@@ -1,6 +1,11 @@
 #ifndef _VOBJ_H
 #define _VOBJ_H
 
+
+#include "obj.h"
+#include "hge.h"
+#include "hgeSprite.h"
+
 #define VOBJ_PARENT_CLASS obj
 
 class vobj :public obj
@@ -16,7 +21,7 @@ public:
     vobj();
 	~vobj();
 
-	virtual BOOL RenderFunc(FLOAT dt);
+	virtual bool RenderFunc(FLOAT dt);
 };
 
 #endif

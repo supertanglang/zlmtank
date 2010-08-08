@@ -1,4 +1,5 @@
-#include "def.h"
+#include "types.h"
+#include "b2obj.h"
 
 b2obj::b2obj()
 {

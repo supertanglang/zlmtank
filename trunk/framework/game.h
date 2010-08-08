@@ -1,6 +1,12 @@
 #ifndef _GAME_H
 #define _GAME_H
 
+#include <list>
+#include "scene.h"
+#include "ue.h"
+#include "sysinterface.h"
+
+
 typedef std::list<scene *>::iterator SCENE_LSIT_ITR;
 
 #define GETHGE() Game::Instance()->Instance()->GetSysInterface()->GetHge();

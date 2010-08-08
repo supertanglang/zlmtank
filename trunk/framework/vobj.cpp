@@ -1,4 +1,7 @@
-#include "def.h"
+//#include "def.h"
+#include "vobj.h"
+#include "game.h"
+
 
 vobj::vobj()
 {
@@ -20,7 +23,7 @@ vobj::~vobj()
 	m_hge = NULL;
 }
 
-BOOL vobj::RenderFunc(FLOAT dt)
+bool vobj::RenderFunc(FLOAT dt)
 {
     if(m_hgeSprite)m_hgeSprite->Render(sx,sy);
 	return false;
