@@ -5,11 +5,11 @@ CPP  = g++.exe
 CC   = gcc.exe
 WINDRES = windres.exe
 RES  = 
-OBJ  = gccRelease/hgedistort.o gccRelease/hgefont.o gccRelease/hgegui.o gccRelease/hgeguictrls.o gccRelease/hgeparticle.o gccRelease/hgepmanager.o gccRelease/hgerect.o gccRelease/hgeresource.o gccRelease/hgesprite.o gccRelease/hgevector.o gccRelease/parser.o gccRelease/resources.o gccRelease/hgeanim.o $(RES)
-LINKOBJ  = gccRelease/hgedistort.o gccRelease/hgefont.o gccRelease/hgegui.o gccRelease/hgeguictrls.o gccRelease/hgeparticle.o gccRelease/hgepmanager.o gccRelease/hgerect.o gccRelease/hgeresource.o gccRelease/hgesprite.o gccRelease/hgevector.o gccRelease/parser.o gccRelease/resources.o gccRelease/hgeanim.o $(RES)
-LIBS =  -L"C:/Dev-Cpp/lib"   
-INCS =  -I"C:/Dev-Cpp/include" 
-CXXINCS =  -I"C:/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"C:/Dev-Cpp/include/c++/3.4.2/backward"  -I"C:/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"C:/Dev-Cpp/include/c++/3.4.2"  -I"C:/Dev-Cpp/include" 
+OBJ  = gccRelease/hgedistort.o gccRelease/hgefont.o gccRelease/hgegui.o gccRelease/hgeguictrls.o gccRelease/hgeparticle.o gccRelease/hgepmanager.o gccRelease/hgerect.o gccRelease/hgeresource.o gccRelease/hgesprite.o gccRelease/hgevector.o gccRelease/parser.o gccRelease/resources.o gccRelease/hgestrings.o $(RES)
+LINKOBJ  = gccRelease/hgedistort.o gccRelease/hgefont.o gccRelease/hgegui.o gccRelease/hgeguictrls.o gccRelease/hgeparticle.o gccRelease/hgepmanager.o gccRelease/hgerect.o gccRelease/hgeresource.o gccRelease/hgesprite.o gccRelease/hgevector.o gccRelease/parser.o gccRelease/resources.o gccRelease/hgestrings.o $(RES)
+LIBS =  -L"d:/Program Files/DEV-CPP/Lib"   
+INCS =  -I"d:/Program Files/DEV-CPP/include" 
+CXXINCS =  -I"d:/Program Files/DEV-CPP/lib/gcc/mingw32/3.4.2/include"  -I"d:/Program Files/DEV-CPP/include/c++/3.4.2/backward"  -I"d:/Program Files/DEV-CPP/include/c++/3.4.2/mingw32"  -I"d:/Program Files/DEV-CPP/include/c++/3.4.2"  -I"d:/Program Files/DEV-CPP/include" 
 BIN  = gccRelease/libhgehelp.a
 CXXFLAGS = $(CXXINCS)   -fexpensive-optimizations -O3
 CFLAGS = $(INCS)   -fexpensive-optimizations -O3
@@ -63,5 +63,5 @@ gccRelease/parser.o: parser.cpp
 gccRelease/resources.o: resources.cpp
 	$(CPP) -c resources.cpp -o gccRelease/resources.o $(CXXFLAGS)
 
-gccRelease/hgeanim.o: hgeanim.cpp
-	$(CPP) -c hgeanim.cpp -o gccRelease/hgeanim.o $(CXXFLAGS)
+gccRelease/hgestrings.o: hgestrings.cpp
+	$(CPP) -c hgestrings.cpp -o gccRelease/hgestrings.o $(CXXFLAGS)
