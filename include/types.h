@@ -1,43 +1,31 @@
-#ifndef _TYPE_H
-#define _TYPE_H
-
-//types
-#ifndef NULL
-#define NULL 0
-#endif
-
-#define DWORD unsigned long
-#define WORD   unsigned short
-#define BYTE     unsigned char
-#define CHAR    char
-#define BOOL    bool
-#define FLOAT  float
-
-#define U32 unsigned long
-#define U16 unsigned short
-#define U8   unsigned char
-#define S32 long
-#define S16 short
-#define S8   char
+#ifndef _TYPES_H
+#define _TYPES_H
 
 
 
+#define	VOID	void
+#define	BOOL	int
+#define	U8		unsigned char
+#define	S8		char
+#define	U16		unsigned short
+#define	S16		short
+#define	U32		unsigned long
+#define	S32		long
 
-#ifdef WIN32
-#define ASSERT(X) assert(X)
-#else
-#define ASSERT(X)
-#endif
+#define	BYTE	U8
+#define	WORD	U16
+#define	DWORD	U32
 
-class FPOINT
-{
-public:
-    FLOAT x;
-	FLOAT y;
-	FPOINT(){x=0;y=0;};
-	void Set(FLOAT a,FLOAT b){x=a;y=b;};
-	void SetZero(){x=0;y=0;};
-};
+#define	NULL	0
+#define	TRUE	1
+#define	FALSE	0
 
+
+
+
+
+#define EXTERN
+#define INLINE
+#define STATIC static
 
 #endif
