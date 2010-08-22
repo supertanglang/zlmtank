@@ -111,6 +111,75 @@ set_svga_mode:                                             ;;设置显卡模式
   pop               es
   ret
 
+
+;---------------------------------------------
+; 获取总内存大小
+;---------------------------------------------
+get_mem_ext:
+  ;获取扩展内存
+  mov	ax,	0xe801
+  int	0x15
+  jc	erre801		;获取成功会清除cf位
+  cmp	cx,	0x0
+  jne	ok_cxdx
+  cmp	dx,	0x0
+  jne	ok_cxdx
+  ;如果ax,bx里面都没有,肯定在cx,dx里面
+  mov	cx,	ax
+  mov	dx,	bx
+
+ok_cxdx:
+  ;计算扩展内存
+  mov	ax,	BOOTINFO_SEG
+  mov	es,	ax
+  and	edx,	0xffff
+  shl	edx,	6
+  mov	[es:MEM_E801_MEM_LEN_DW],	edx
+  and	ecx,	0xffff
+  add	[es:MEM_E801_MEM_LEN_DW],	ecx
+
+  
+erre801:
+
+ret
+
+;---------------------------------------------
+; 获取内存map
+;---------------------------------------------
+get_mem_map:
+  ;获取扩展内存分布
+  mov	ax,	BOOTINFO_SEG
+  mov	es,	ax
+  mov	dword [es:MEM_E820_ITEM_NUM_DW],	0
+  mov	di,	MEM_E820_ITEM_PTR
+jmpe820:
+clean20byte:
+  mov	dword [es:di],		0
+  mov	dword [es:di+4],	0
+  mov	dword [es:di+8],	0
+  mov	dword [es:di+12],	0
+  mov	dword [es:di+16],	0
+
+  mov	ax,	0xe820
+  mov	edx,	0x534d4150  ;"SMAP"
+  mov	ecx,	MEM_E820_ITEM_SIZE
+
+  int	0x15
+  jc	erre820
+
+  cmp	eax,	0x534d4150
+  jne	erre820
+oke820:
+  inc	dword [es:MEM_E820_ITEM_NUM_DW]
+  add	di,	MEM_E820_ITEM_SIZE
+  cmp	ebx,	0
+
+  jne	jmpe820
+erre820:
+
+ret
+
+
 ; --------------------------------------------
 ;  Here is the operating system entry point
 ; --------------------------------------------
@@ -128,7 +197,8 @@ begin:
         ;svga到后面初始化
 	;call set_svga_mode
 	;call get_svga_info
-	;call getbootinfo
+	call get_mem_ext
+	call get_mem_map
 	
 
 	;下面开始为进入保护模式而进行初始化工作
@@ -273,4 +343,8 @@ putstrd:
 
 
 
-times 1024-($-$$)-64 db 0
+times 1024-($-$$) db 0
+
+
+
+

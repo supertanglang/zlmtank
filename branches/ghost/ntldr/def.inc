@@ -10,8 +10,17 @@ NTLDR16_LINEADDR      equ                 0x90000
 
 NTLDR32_SIZE          equ                 204800        ;SYSTEM的大小100KB,此值必须是 512 的倍数
                                                       ;实际值可以不符
-NTLDR32_LINEADDR      equ                 0x400000
-NTLDR32_FARMER_SIZE   equ                 0x80
+NTLDR32_LINEADDR      equ                 0x100000
+NTLDR32_FARMER_SIZE   equ                 0x80        ;128byte
 
 
-BOOT_PARAM            equ  512-2-4    ;ntldr的长度
+;bootinfo放到0x600的位子
+BOOTINFO_SEG		equ		0x0
+BOOTINFO_OFFSET		equ		0x600
+BOOT_PARAM_LINEADDR	equ		0x600
+
+
+MEM_E801_MEM_LEN_DW	equ		BOOTINFO_OFFSET + 0
+MEM_E820_ITEM_NUM_DW	equ		BOOTINFO_OFFSET + 4
+MEM_E820_ITEM_PTR	equ		MEM_E820_ITEM_NUM_DW + 4
+MEM_E820_ITEM_SIZE	equ		20

@@ -1,6 +1,6 @@
 set NTLDR_DIR=ntldr
 set LIBS_DIR=libs
-
+set COMPILER_FLAG=-fpack-struct -std=c99 -c -fno-builtin
 
 :clean
 
@@ -18,12 +18,22 @@ nasm -f elf ..\%NTLDR_DIR%\ntldr32.asm -o %NTLDR_DIR%\ntldr32.s -i ..\%NTLDR_DIR
 
 
 
-gcc -fpack-struct -std=c99 -c ..\%NTLDR_DIR%\ntldr32.c -o %NTLDR_DIR%\ntldr32.o -I %CD%\..\include
+gcc %COMPILER_FLAG% ..\%NTLDR_DIR%\ntldr32.c -o %NTLDR_DIR%\ntldr32.o -I %CD%\..\include
 
-gcc -fpack-struct -std=c99 -c ..\%NTLDR_DIR%\vga.c -o %NTLDR_DIR%\vga.o -I %CD%\..\include
+gcc %COMPILER_FLAG% ..\%NTLDR_DIR%\vga.c -o %NTLDR_DIR%\vga.o -I %CD%\..\include
+
+gcc %COMPILER_FLAG% ..\%NTLDR_DIR%\gdt.c -o %NTLDR_DIR%\gdt.o -I %CD%\..\include
+
+gcc %COMPILER_FLAG% ..\%NTLDR_DIR%\idt.c -o %NTLDR_DIR%\idt.o -I %CD%\..\include
+
+gcc %COMPILER_FLAG% ..\%NTLDR_DIR%\irq.c -o %NTLDR_DIR%\irq.o -I %CD%\..\include
+nasm -f elf ..\%NTLDR_DIR%\irq_s.asm -o %NTLDR_DIR%\irq_s.s -i ..\%NTLDR_DIR%\
+
+gcc %COMPILER_FLAG% ..\%NTLDR_DIR%\traps.c -o %NTLDR_DIR%\traps.o -I %CD%\..\include
+nasm -f elf ..\%NTLDR_DIR%\traps_s.asm -o %NTLDR_DIR%\traps_s.s -i ..\%NTLDR_DIR%\
 
 
-ld -o %NTLDR_DIR%\ntldr32.bin -Ttext 0x400000 -e ntldr_entry %NTLDR_DIR%\ntldr32.s %NTLDR_DIR%\ntldr32.o %LIBS_DIR%\stdlib.o %NTLDR_DIR%\vga.o
+ld -o %NTLDR_DIR%\ntldr32.bin -Ttext 0x100000 -e ntldr_entry %NTLDR_DIR%\ntldr32.s %NTLDR_DIR%\ntldr32.o %LIBS_DIR%\stdlib.o %NTLDR_DIR%\vga.o %NTLDR_DIR%\gdt.o %NTLDR_DIR%\idt.o %NTLDR_DIR%\irq.o %NTLDR_DIR%\irq_s.s %NTLDR_DIR%\traps.o %NTLDR_DIR%\traps_s.s
 
 objcopy -R .note -R .comment -S -O binary %NTLDR_DIR%\ntldr32.bin %NTLDR_DIR%\ntldr32.out
 

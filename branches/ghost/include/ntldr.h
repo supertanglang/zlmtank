@@ -1,6 +1,6 @@
 #ifndef NTLDR_H
 #define NTLDR_H
 
-#include <types.h>
+#define NTLDR_PRINTF printf
 
 #endif

@@ -35,7 +35,7 @@ static void vga_scrollup(void)
 	unsigned short *vgamem = (unsigned short *)(VGAMEM + (LINES - 1) * COLS * 2);
 
 	// 复制下面的内容掩盖上面，实现向上卷动
-	misc_memcpy(dest, src, (LINES - 1) * COLS * 2);
+	memcpy(dest, src, (LINES - 1) * COLS * 2);
 
 	// 清除最底下的一行
 	for (i = 0; i < COLS; i++)

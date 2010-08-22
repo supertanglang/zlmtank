@@ -41,14 +41,14 @@ ntldr文件分为两部分
 +-----------------+-------------------+-----------------------+
 1,bootsec找FAT表，吧ntldr加载到0x90000的位子，执行ntldr16的16位的代码
 2,ntldr16切换到保护模式,跳转到0x90400,ntldr32pre
-3,ntldr32pre吧ntldr32(0x90400+128)搬到0x400000(4M)的位子,执行真正的ntldr32.从此进入c入口
+3,ntldr32pre吧ntldr32(0x90400+128)搬到0x100000(1M)的位子,执行真正的ntldr32.从此进入c入口
 
 
 
 
 
 
-备注：ntldr被bootsec加载到0x90000,很有可能会吧后面的EBDA覆盖，v86模式可能玩不了了。。。
+note：ntldr被bootsec加载到0x90000,很有可能会吧后面的EBDA覆盖，v86模式可能玩不了了。。。
 先不玩了，以后要调整调整
 
 
@@ -68,3 +68,33 @@ C0000- C7FFF                 VIDEO                Used by the Video BIOS (用于显
 C8000- EFFFF                 ROM                   May be used by adapter ROMS or as memory mapped I/O 
 F0000- FFFFF                 BIOS                   System BIOS, 32K (starts at F8000) or 64K (系统BIOS,32k<从F8000开始>或者64K)
 
+
+
+我们对内存的规划
+0x00000000---0x00100000的位子保留原样
+0x00100000---0x
+
+
+
+
+
+4)分页与虚拟内存
+
+1，系统要求计算机至少需要64M物理内存,其中32M分配给操作系统,常驻物理内存,不可替换
+
+
+phy memory			linar memory
+
+
+0-1M
+0x0000 0000			0x0000 0000		1M
+0x000f ffff			0x000f ffff		reserved
+
+1-2M
+0x0010 0000			0x0010 0000             1M
+0x001f ffff			0x001f ffff		ntldr
+
+
+2-30M
+0x0020 0000			0x8000 0000		30M
+0x0200 0000			0x8200 0000		kernel
