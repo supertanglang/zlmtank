@@ -1,9 +1,8 @@
-#include <types.h>
-#include <stdlib.h>
+#include "stdlib.h"
 
 
 // misc_memset(): 设置 siz 字节大小内存块 p 数据为 ch
-INLINE void misc_memset(void *p, unsigned char ch, size_t siz)
+void memset(void *p, unsigned char ch, size_t siz)
 {
 	int i;
 
@@ -12,7 +11,7 @@ INLINE void misc_memset(void *p, unsigned char ch, size_t siz)
 }
 
 // misc_memcpy(): 复制 siz 字节内存块 src 到内存块 dest
-INLINE void misc_memcpy(void *dest, void *src, size_t siz)
+void memcpy(void *dest, void *src, size_t siz)
 {
 	int i;
 
@@ -20,7 +19,7 @@ INLINE void misc_memcpy(void *dest, void *src, size_t siz)
 		*(unsigned char *)dest++ = *(unsigned char *)src++;
 }
 
-INLINE int misc_memcmp(void *dest, void *src, size_t siz)
+int memcmp(void *dest, void *src, size_t siz)
 {
 	char cmp;
 	while(siz-->0)
@@ -37,7 +36,7 @@ INLINE int misc_memcmp(void *dest, void *src, size_t siz)
 
 
 // misc_strlen(): 返回以 '\0' 结尾字符串 s 的长度
-INLINE int misc_strlen(char *s)
+int strlen(char *s)
 {
 	int len;
 
@@ -48,7 +47,7 @@ INLINE int misc_strlen(char *s)
 
 // misc_strcmp(): 比较字符串 s1 和 s2
 // 相等时返回 0 否则以 ASCII 排列顺序返回 1 或者 -1
-INLINE int misc_strcmp(char *s1, char *s2)
+int strcmp(char *s1, char *s2)
 {
 	int i;
 
@@ -60,7 +59,7 @@ INLINE int misc_strcmp(char *s1, char *s2)
 
 // misc_strncmp(): 比较 n 个字节长度字符串 s1 和 s2
 // 返回值同 misc_strcmp() 但字符串可以不以 '\0'
-INLINE int misc_strncmp(char *s1, char *s2, int n)
+int strncmp(char *s1, char *s2, int n)
 {
 	int i;
 
@@ -74,7 +73,7 @@ INLINE int misc_strncmp(char *s1, char *s2, int n)
 // siz 为 dest 的空间大小
 // 返回值指向 dest 复制完 src 字符串后
 // 因为可能造成溢出，不推荐使用本函数
-INLINE char *misc_strcpy(char *dest, char *src)
+char *strcpy(char *dest, char *src)
 {
 	int i;
 
@@ -86,7 +85,7 @@ INLINE char *misc_strcpy(char *dest, char *src)
 
 // misc_strncpy(): 复制 n 个字节字符串 src 到 dest
 // 返回值指向 dest 复制完 src 字符串后
-INLINE char *misc_strncpy(char *dest, char *src, int n)
+char *strncpy(char *dest, char *src, int n)
 {
 	int i;
 
@@ -99,7 +98,7 @@ INLINE char *misc_strncpy(char *dest, char *src, int n)
 
 // misc_strcat(): 复制字符串 src 到 dest 字符串后
 // 返回值指向 dest 复制完 src 字符串后
-INLINE char *misc_strcat(char *dest, char *src)
+char *strcat(char *dest, char *src)
 {
 	int i, j;
 
@@ -113,7 +112,7 @@ INLINE char *misc_strcat(char *dest, char *src)
 
 // misc_strncat(): 复制 n 个字符串 src 到 dest 字符串后
 // 返回值指向 dest 复制完 src 字符串后
-INLINE char *misc_strncat(char *dest, char *src, int n)
+char *strncat(char *dest, char *src, int n)
 {
 	int i, j;
 
@@ -128,7 +127,7 @@ INLINE char *misc_strncat(char *dest, char *src, int n)
 // misc_strchr(): 在字符串 s 中搜索字符 c
 // 找到 s 中第一个 c 后返回该字符在 s 的位置指针
 // 找不到返回 NULL (void *)0
-INLINE char *misc_strchr(char *s, int c)
+char *strchr(char *s, int c)
 {
 	int i;
 
@@ -141,11 +140,11 @@ INLINE char *misc_strchr(char *s, int c)
 // misc_strchr(): 在字符串 s 中反相搜索字符 c
 // 反相找到 s 中第一个 c 后返回该字符在 s 的位置指针
 // 找不到返回 NULL (void *)0
-INLINE char *misc_strrchr(char *s, int c)
+char *strrchr(char *s, int c)
 {
 	int i, len;
 
-	len = STRLEN(s);
+	len = strlen(s);
 	for (i = len; s[i] != '\0'; i--)
 		if (s[i] == c)
 			return &s[i];
@@ -155,14 +154,14 @@ INLINE char *misc_strrchr(char *s, int c)
 // misc_strstr(): 在字符串 s1 中搜索字符串 s2
 // 找到 s1 中第一个匹配的 s2 字符串后返回该字符串在 s1 的起始位置指针
 // 找不到返回 NULL (void *)0
-INLINE char *misc_strstr(char *s1, char *s2)
+char *strstr(char *s1, char *s2)
 {
 	int i, n;
 
-	n = STRLEN(s2);
+	n = strlen(s2);
 	for (i = 0; s1[i] != '\0'; i++)
 		if (s1[i] == s2[0])
-			if (STRNCMP(&s1[i], s2, n) == 0)
+			if (strncmp(&s1[i], s2, n) == 0)
 				return &s1[i];
 	return (void *)0;
 }
@@ -255,7 +254,7 @@ unsigned long hex2dec(const unsigned char *s)
 
 
 // number(): 指定 base 进制数字 num 到缓存 buf 占位 siz 字节
-STATIC int number(char *buf, size_t siz, int num, int base, int precision, FLAGS flags)
+int number(char *buf, size_t siz, int num, int base, int precision, FLAGS flags)
 {
 	int i, n;
 	char c, sign, tmp[36];
@@ -319,7 +318,7 @@ STATIC int number(char *buf, size_t siz, int num, int base, int precision, FLAGS
 // 返回输出到缓存的字符数
 ///! 本函数由 Linux 中代码修改而来，GPL not BSD
 ///? 没有严格检查 siz 需修补
-STATIC int vsnprintf(char *buf, size_t siz, char *fmt, va_list args)
+int vsnprintf(char *buf, size_t siz, char *fmt, va_list args)
 {
 	int i, n, len;
 	char *p;
@@ -414,7 +413,7 @@ prevend:
 			break;
 		case 's':
 			s = va_arg(args, char *);
-			len = STRLEN(s);
+			len = strlen(s);
 			if (precision < 0)
 				precision = len;
 			else if (len > precision)
@@ -450,7 +449,7 @@ prevend:
 
 // misc_snprintf(): 使用 fmt 格式化输出可变参数 ... 到 siz 字节大小缓存 buf
 // 返回输出到缓存的字符数
-int misc_snprintf(char *buf, size_t siz, char *fmt, ...)
+int snprintf(char *buf, size_t siz, char *fmt, ...)
 {
 	int i;
 	va_list args;
@@ -465,12 +464,17 @@ int misc_snprintf(char *buf, size_t siz, char *fmt, ...)
 char misc_buf[1024] = "\0";
 
 
-stdputs pstdputs = NULL;
+stdputs pstdputs = 0;
+
+void SetStd(stdputs std)
+{
+  pstdputs = std;
+}
 
 
 // misc_printf(): 使用 fmt 格式化输出可变参数 ... 到默认输出
 // 返回输出的字符数
-int misc_printf(char *fmt, ...)
+int printf(char *fmt, ...)
 {
 	int i;
 	va_list args;

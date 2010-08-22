@@ -1,15 +1,10 @@
 #ifndef STDLIB_H
 #define STDLIB_H
 
-#define STRLEN(S)		misc_strlen(S)
-#define STRCAT(S1,S2)	misc_strcat(S1, S2)
-#define STRSTR(S1,S2)	misc_strstr(S1,S2)
-#define STRCMP(S1,S2)	misc_strcmp(S1,S2)
-#define STRNCMP(S1,S2,N)	misc_strncmp(S1, S2, N)
-#define STRCPY(S1,S2)	misc_strcpy(S1,S2)
-#define STRNCPY(S1,S2,N) misc_strncpy(S1,S2,N)
+
 
 typedef int (*stdputs)(char *s);
+void SetStd(stdputs std);
 
 
 // 可变参数宏
@@ -40,55 +35,55 @@ typedef char *va_list;
 typedef int size_t;
 
 // misc_memset(): 设置 siz 字节大小内存块 p 数据为 ch
-EXTERN INLINE void misc_memset(void *p, unsigned char ch, size_t siz);
-// misc_memcpy(): 复制 siz 字节内存块 src 到内存块 dest
-EXTERN INLINE void misc_memcpy(void *dest, void *src, size_t siz);
+void memset(void *p, unsigned char ch, size_t siz);
 
-EXTERN INLINE int misc_memcmp(void *dest, void *src, size_t siz);
+// misc_memcpy(): 复制 siz 字节内存块 src 到内存块 dest
+void memcpy(void *dest, void *src, size_t siz);
+
+int memcmp(void *dest, void *src, size_t siz);
 // misc_strlen(): 返回以 '\0' 结尾字符串 s 的长度
-EXTERN INLINE int misc_strlen(char *s);
+int strlen(char *s);
 // misc_strcmp(): 比较字符串 s1 和 s2
 // 相等时返回 0 否则以 ASCII 排列顺序返回 1 或者 -1
-EXTERN INLINE int misc_strcmp(char *s1, char *s2);
+int strcmp(char *s1, char *s2);
 // misc_strncmp(): 比较 n 个字节长度字符串 s1 和 s2
 // 返回值同 misc_strcmp() 但字符串可以不以 '\0'
-EXTERN INLINE int misc_strncmp(char *s1, char *s2, int n);
+int strncmp(char *s1, char *s2, int n);
 // misc_strcpy(): 复制字符串 src 到 dest
 // siz 为 dest 的空间大小
 // 返回值指向 dest 复制完 src 字符串后
 // 因为可能造成溢出，不推荐使用本函数
-EXTERN INLINE char *misc_strcpy(char *dest, char *src);
+char *strcpy(char *dest, char *src);
 // misc_strncpy(): 复制 n 个字节字符串 src 到 dest
 // 返回值指向 dest 复制完 src 字符串后
-EXTERN INLINE char *misc_strncpy(char *dest, char *src, int n);
+char *strncpy(char *dest, char *src, int n);
 // misc_strcat(): 复制字符串 src 到 dest 字符串后
 // 返回值指向 dest 复制完 src 字符串后
-EXTERN INLINE char *misc_strcat(char *dest, char *src);
+char *strcat(char *dest, char *src);
 // misc_strncat(): 复制 n 个字符串 src 到 dest 字符串后
 // 返回值指向 dest 复制完 src 字符串后
-EXTERN INLINE char *misc_strncat(char *dest, char *src, int n);
+char *strncat(char *dest, char *src, int n);
 // misc_strchr(): 在字符串 s 中搜索字符 c
 // 找到 s 中第一个 c 后返回该字符在 s 的位置指针
 // 找不到返回 NULL (void *)0
-EXTERN INLINE char *misc_strchr(char *s, int c);
+char *strchr(char *s, int c);
 // misc_strchr(): 在字符串 s 中反相搜索字符 c
 // 反相找到 s 中第一个 c 后返回该字符在 s 的位置指针
 // 找不到返回 NULL (void *)0
-EXTERN INLINE char *misc_strrchr(char *s, int c);
+char *strrchr(char *s, int c);
 // misc_strstr(): 在字符串 s1 中搜索字符串 s2
 // 找到 s1 中第一个匹配的 s2 字符串后返回该字符串在 s1 的起始位置指针
 // 找不到返回 NULL (void *)0
-EXTERN INLINE char *misc_strstr(char *s1, char *s2);
+char *strstr(char *s1, char *s2);
 
 
 // misc_snprintf(): 使用 fmt 格式化输出可变参数 ... 到 siz 字节大小缓存 buf
 // 返回输出到缓存的字符数
-EXTERN int misc_snprintf(char *buf, size_t siz, char *fmt, ...);
-// misc_buf: 1K 大小字符缓存
-EXTERN char misc_buf[1024];
+int snprintf(char *buf, size_t siz, char *fmt, ...);
+
 // misc_printf(): 使用 fmt 格式化输出可变参数 ... 到默认输出
 // 返回输出的字符数
-EXTERN int misc_printf(char *fmt, ...);
+int printf(char *fmt, ...);
 
 
 int atoi_s(char **s);

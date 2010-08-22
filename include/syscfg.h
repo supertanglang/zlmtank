@@ -1,6 +1,52 @@
 #ifndef SYSCFG_H
 #define SYSCFG_H
 
+//内存分布
+#define	KERNEL_BASE_LA   0x80000000       //3G
+#define KERNEL_BASE_PA   0x00000000       //0
+#define KERNEL_BASE_SIZE 0x02000000       //32M
+
+
+#define ESP_BASE_LA   0x90000
+#define ESP_BASE_PA   0x90000
+#define ESP_BASE_SIZE //....
+
+#define BIOS_BASE_LA  0x000000
+#define BIOS_BASE_PA  0x000000
+#define BIOS_BASE_SIZE 0x100000
+
+#define NTLDR_BASE_LA  BIOS_BASE_LA+BIOS_BASE_SIZE  //0x100000
+#define NTLDR_BASE_PA  BIOS_BASE_PA+BIOS_BASE_SIZE
+#define NTLDR_BASE_SIZE 0x100000
+
+
+#define PTE_BASE_LA NTLDR_BASE_LA + NTLDR_BASE_SIZE //0x200000
+#define PTE_BASE_PA NTLDR_BASE_PA + NTLDR_BASE_SIZE
+#define PTE_BASE_SIZE 0x100000
+
+#define GDT_ITEM_NUM 256
+#define GDT_BASE_LA PTE_BASE_LA + PTE_BASE_SIZE //0x300000
+#define GDT_BASE_PA PTE_BASE_PA + PTE_BASE_SIZE
+#define GDT_BASE_SIZE 8*GDT_ITEM_NUM  //32个gdt slot,每个dword*2
+
+#define IDT_ITEM_NUM 256
+#define IDT_BASE_LA GDT_BASE_LA + GDT_BASE_SIZE
+#define IDT_BASE_PA GDT_BASE_PA + GDT_BASE_SIZE
+#define IDT_BASE_SIZE 4*IDT_ITEM_NUM
+
+
+//GDT system seletor
+#define KERNEL_CODE_SEL 0x8
+#define KERNEL_DATA_SEL 0x10
+
+#define GDT_KERNEL_CODE_SEL KERNEL_CODE_SEL
+#define GDT_KERNEL_DATA_SEL KERNEL_DATA_SEL
+#define IDT_KERNEL_CODE_SEL KERNEL_CODE_SEL
+#define IDT_KERNEL_DATA_SEL KERNEL_DATA_SEL
+
+
+
+
 
 
 
@@ -13,19 +59,26 @@
 // StartModeExt
 #define STARTMODEEXT_
 
+
+
+// VedioMode
+#define VIDEO_TEXT_MODE
+#define VIDEO_VESA_MODE
+
 typedef struct _syscfg
 {
-  BOOTINFO Bootinfo;
+  BOOTINFO *Bootinfo;
   DWORD CpuType;
   DWORD CpuFreq;
   DWORD CpuNum;
 
 
-  DWORD StartMode;
-  DWORD StartModeExt;
+  DWORD RunningMode;
+  DWORD RunningExt;
+
+  DWORD VideoMode;
 
 }SYSTEMCONFIG;
 
-BOOL GetSystemConfig(SYSTEMCONFIG *);
 
 #endif
