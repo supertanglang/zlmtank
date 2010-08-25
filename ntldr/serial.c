@@ -1,6 +1,8 @@
+#include <types.h>
 #include <serial.h>
 #include <io.h>
-#include <stdio.h>
+#include <stdlib.h>
+#include <ntldr.h>
 
 SERIALPORT gSerialPort[COMNUM] = {{SERIAL_NO_INSTALLED,COM1BASE,FALSE},
 									{SERIAL_NO_INSTALLED,COM2BASE,FALSE},
@@ -12,17 +14,17 @@ void SerialTest(void)
 	U32 ret = 0;
 
 	ret = SerialDetect(0x3f8);
-	PRINTF("Serial:detect port = %x,ret = %x\n", 0x3f8, ret);
+	NTLDR_PRINTF("Serial:detect port = %x,ret = %x\n", 0x3f8, ret);
 
 
 	ret = SerialDetect(0x2f8);
-	PRINTF("Serial:detect port = %x,ret = %x\n", 0x2f8, ret);
+	NTLDR_PRINTF("Serial:detect port = %x,ret = %x\n", 0x2f8, ret);
 
 	ret = SerialDetect(0x3e8);
-	PRINTF("Serial:detect port = %x,ret = %x\n", 0x3e8, ret);
+	NTLDR_PRINTF("Serial:detect port = %x,ret = %x\n", 0x3e8, ret);
 
 	ret = SerialDetect(0x2e8);
-	PRINTF("Serial:detect port = %x,ret = %x\n", 0x2e8, ret);
+	NTLDR_PRINTF("Serial:detect port = %x,ret = %x\n", 0x2e8, ret);
 	return;
 }
 
@@ -106,14 +108,14 @@ BOOL SerialSendByte(DWORD PortID, BYTE ch)
 	timeout = 0x00FFFFL;
 
 	// Wait for transmitter to clear
-	while ((io_readbyte((USHORT)(gSerialPort[PortID-1].IoAddr + LSR)) & XMTRDY) == 0)
+	while ((io_readbyte((WORD)(gSerialPort[PortID-1].IoAddr + LSR)) & XMTRDY) == 0)
 	{
 	 	if (!(--timeout))
 		{
 			return FALSE;
 		}
 	}
-	io_writebyte((USHORT)(gSerialPort[PortID-1].IoAddr + TXR), ch);
+	io_writebyte((WORD)(gSerialPort[PortID-1].IoAddr + TXR), ch);
 
 	return TRUE;
 }

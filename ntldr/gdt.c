@@ -1,5 +1,5 @@
 #include <types.h>
-
+#include <stdlib.h>
 #include <bootinfo.h>
 #include <syscfg.h>
 #include <gdt.h>
@@ -16,8 +16,10 @@ DWORD GdtItemNum = GDT_ITEM_NUM;
 void gdt_init(void) 
 {
   GDTR gdtr = {0};
+
   gdtr.GdtAddr = GdtAddr;
   gdtr.GdtLengthLimit = sizeof(GDTITEM) * GdtItemNum;
+  memset(gdtr.GdtAddr, 0, gdtr.GdtLengthLimit);
   // ÏµÍ³¶Î,4G¶¼ÄÜ¸ã
   Gdt_SetEntry( 1, 0x0000, 0xFFFFF, DA_CR | DA_32 | DA_LIMIT_4K );
   Gdt_SetEntry( 2, 0x0000, 0xFFFFF, DA_DRW | DA_LIMIT_4K | DA_32 );
@@ -27,11 +29,12 @@ void gdt_init(void)
   Gdt_SetEntry( 4, 0x0000, 0xFFFFF, DA_DRW | DA_LIMIT_4K | DA_32 | DA_DPL3 );
 
   load_gdtr((DWORD)&gdtr); 
+  //__asm__ __volatile__ ( "lgdt %0" : "=m"( gdtr ) ) ; //è½½å…¥GDTè¡¨
 }
 
 void Gdt_SetEntry(DWORD vector, DWORD base, DWORD limit, DWORD attribute )
 {
-	GDTITEM* desc	=	(GDTITEM *)(GdtAddr + vector * sizeof(GDTITEM));
+	GDTITEM* desc	=	GdtAddr + vector;
 	desc->limit_low		=	limit & 0x0FFFF;
 	desc->base_low		=	base & 0x0FFFF;
 	desc->base_mid		= 	(base >> 16) & 0x0FF;	

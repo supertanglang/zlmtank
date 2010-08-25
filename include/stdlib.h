@@ -76,6 +76,7 @@ char *strrchr(char *s, int c);
 // 找不到返回 NULL (void *)0
 char *strstr(char *s1, char *s2);
 
+int vsnprintf(char *buf, size_t siz, char *fmt, va_list args);
 
 // misc_snprintf(): 使用 fmt 格式化输出可变参数 ... 到 siz 字节大小缓存 buf
 // 返回输出到缓存的字符数
