@@ -2,11 +2,14 @@
 #include <vga.h>
 #include <bootinfo.h>
 #include <stdlib.h>
+#include <dbg.h>
 
 #include <gdt.h>
 #include <idt.h>
 #include <irq.h>
 #include <traps.h>
+#include <time.h>
+#include <serial.h>
 //刚刚进入c入口
 //此时我们在4M多一点点的位子
 //刚刚进入保护模式
@@ -30,6 +33,9 @@ void ntldr_initsyscfg();
 
 void ntldr_main()
 {
+  InitSerialPort();
+
+
   //bios默认在文本模式,还是初始化一下
   vga_init();
   // 清屏
@@ -51,7 +57,11 @@ void ntldr_main()
   //初始化trap
   traps_init();
 
+  //初始化定时器
+  timer_init();
   
+  SerialTest();
+
   
   for(;;);
   

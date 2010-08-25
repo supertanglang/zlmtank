@@ -1,5 +1,5 @@
 
-;%include "def.inc"
+%include "def.inc"
 
 [extern ntldr_main]
 
@@ -18,7 +18,7 @@ ntldr_entry:
 	mov               fs , ax
 	mov               gs , ax
 	mov               ss , ax
-	mov               esp , 0x400000
+	mov               esp , NTLDR16_LINEADDR
 	mov               ebp, esp
   
 	;跳入c内核入口函数

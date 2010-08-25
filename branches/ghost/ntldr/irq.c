@@ -172,7 +172,7 @@ static void unexpected(int irq)
 {
 	// 硬件中断处理程序类型原本是没有参数的。。。
 	// "Unexpected IRQ #%d\n"
-	NTLDR_PRINTF("Unexpected IRQ #%d\n", irq);
+	//NTLDR_PRINTF("Unexpected IRQ #%d\n", irq);
 	return;
 }
 

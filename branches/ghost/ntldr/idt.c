@@ -23,11 +23,14 @@ void idt_init(void)
 	idtr.base = (unsigned)IdtPtr;//ÎÒÃÇµÄÖÐ¶ÏÏòÁ¿±íÎ»×Ó
 
 	// ÉèÖÃ IDT
+	/*
 	__asm__ (
 		"lidt (%0)"
 		:
 		:"r" ((unsigned char *)&idtr)
 	);
+	*/
+		__asm__ __volatile__  ( "lidt %0" : "=m"( idtr ) ) ;
 
 	return;
 }
@@ -38,7 +41,7 @@ void idt_init(void)
 void Idt_SetEntry(DWORD vector, BYTE desc_type, void* handler)
 {
 	DWORD base		=	(DWORD)handler;
-	IDTGATE* desc		=	IdtPtr + vector * sizeof(IDTGATE);
+	IDTGATE* desc		=	IdtPtr + vector;
 	desc->offset_low	=	base & 0xFFFF;
 	desc->selector		=	IDT_KERNEL_CODE_SEL;	//ç³»ç»Ÿä»£ç æ®µ
 	desc->dcount		=	0;
