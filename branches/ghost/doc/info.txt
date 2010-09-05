@@ -23,7 +23,7 @@
 系统启动,bios加载当前启动介质的第一个扇区(sect)到内存0x7c00处,并跳入0:7c00执行
 
 目前支持启动扇区类型
-bootfloppy.asm   软盘启动扇区记录
+bootfloppy.asm   软盘启动扇区记录(完成)
 bootCDROM.asm    光驱启动扇区记录
 bootHD.asm       硬盘启动扇区记录
 bootUboot.asm    U盘启动扇区记录
@@ -83,18 +83,18 @@ F0000- FFFFF                 BIOS                   System BIOS, 32K (starts at 
 1，系统要求计算机至少需要64M物理内存,其中32M分配给操作系统,常驻物理内存,不可替换
 
 
-phy memory			linar memory
+phy memory			linear memory
 
 
 0-1M
 0x0000 0000			0x0000 0000		1M
-0x000f ffff			0x000f ffff		reserved
+0x000f ffff			0x000f ffff		reserved for bios
 
 1-2M
 0x0010 0000			0x0010 0000             1M
 0x001f ffff			0x001f ffff		ntldr
 
 
-2-30M
+2-32M
 0x0020 0000			0x8000 0000		30M
-0x0200 0000			0x8200 0000		kernel
+0x0200 0000			0x8200 0000		ntoskernel

@@ -36,7 +36,9 @@ gcc %COMPILER_FLAG% ..\%NTLDR_DIR%\time.c -o %NTLDR_DIR%\time.o -I %CD%\..\inclu
 
 gcc %COMPILER_FLAG% ..\%NTLDR_DIR%\serial.c -o %NTLDR_DIR%\serial.o -I %CD%\..\include
 
-ld -o %NTLDR_DIR%\ntldr32.bin -Ttext 0x100000 -e ntldr_entry %NTLDR_DIR%\ntldr32.s %NTLDR_DIR%\ntldr32.o %LIBS_DIR%\stdlib.o %NTLDR_DIR%\vga.o %NTLDR_DIR%\gdt.o %NTLDR_DIR%\idt.o %NTLDR_DIR%\irq.o %NTLDR_DIR%\irq_s.s %NTLDR_DIR%\traps.o %NTLDR_DIR%\traps_s.s %NTLDR_DIR%\time.o %NTLDR_DIR%\serial.o
+gcc %COMPILER_FLAG% ..\%NTLDR_DIR%\page.c -o %NTLDR_DIR%\page.o -I %CD%\..\include
+
+ld -o %NTLDR_DIR%\ntldr32.bin -Ttext 0x100000 -e ntldr_entry %NTLDR_DIR%\ntldr32.s %NTLDR_DIR%\ntldr32.o %LIBS_DIR%\stdlib.o %NTLDR_DIR%\vga.o %NTLDR_DIR%\gdt.o %NTLDR_DIR%\idt.o %NTLDR_DIR%\irq.o %NTLDR_DIR%\irq_s.s %NTLDR_DIR%\traps.o %NTLDR_DIR%\traps_s.s %NTLDR_DIR%\time.o %NTLDR_DIR%\serial.o %NTLDR_DIR%\page.o
 
 objcopy -R .note -R .comment -S -O binary %NTLDR_DIR%\ntldr32.bin %NTLDR_DIR%\ntldr32.out
 

@@ -409,7 +409,7 @@ errmsg	db	10,"NTLDR is missing...",13,10,0
 
 
 size	equ	$ - entry
-%if size+11+2 > 512s
+%if size+11+2 > 512
   %error "code is too large for boot sector"
 %endif
 	times	(512 - size - 11 - 2) db 0

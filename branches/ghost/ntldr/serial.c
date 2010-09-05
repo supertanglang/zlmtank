@@ -25,6 +25,8 @@ void SerialTest(void)
 
 	ret = SerialDetect(0x2e8);
 	NTLDR_PRINTF("Serial:detect port = %x,ret = %x\n", 0x2e8, ret);
+
+	SerialWriteString(COM1,"SerialTestugiuggyugtftftftfyfkyufkyfygfu\n");
 	return;
 }
 
