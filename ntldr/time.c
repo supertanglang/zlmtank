@@ -1,3 +1,4 @@
+#include <types.h>
 #include <io.h>
 #include <irq.h>
 #include <time.h>
@@ -39,7 +40,7 @@ void timer_init(void)
 	clock_tick=0;
 
 	//misc_printf("  The Timer Frequency is %d HZ\n",HZ);
-	NTLDR_PRINTF("  The Start PC Time   is %02d:%02d:%02d %04d-%02d-%02d\n",
+	NTLDR_PRINTF("  SYSTEM start at %02d:%02d:%02d %04d-%02d-%02d\n",
 		            CurrentTime.hour,CurrentTime.min,CurrentTime.sec,
 					CurrentDate.year,CurrentDate.month,CurrentDate.day);
 	//timer_sleep(2000);

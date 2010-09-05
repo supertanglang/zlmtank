@@ -12,6 +12,7 @@
 ntldr_entry:    
 	;设置寄存器   
 	;;初始化数据寄存器
+	cli
 	mov               ax , 0x10
 	mov               ds , ax
 	mov               es , ax

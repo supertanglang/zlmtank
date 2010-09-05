@@ -50,7 +50,22 @@ gdt_data_sel equ gdt_system_data - gdt
 ;------------------------------------------------
 
 
-
+get_bootdriver:
+	push	ax
+	push	es
+	push	dx
+	
+	mov	ax, BOOTSEC_SEG
+	mov	es, ax
+	mov	dl, byte [es:BOOTSEC_OFFSET+24h] ;24h参见boot.asm
+	mov	ax, BOOTINFO_SEG
+	mov	es, ax
+	mov	byte [es:BOOTDRIVER], dl
+	
+	pop	dx
+	pop	es
+	pop 	ax
+	ret
 
 
 
@@ -151,7 +166,7 @@ get_mem_map:
   mov	ax,	BOOTINFO_SEG
   mov	es,	ax
   mov	dword [es:MEM_E820_ITEM_NUM_DW],	0
-  mov	di,	MEM_E820_ITEM_PTR
+  mov	di,	MEM_E820_ITEM_OFFSET
 jmpe820:
 clean20byte:
   mov	dword [es:di],		0
@@ -193,6 +208,8 @@ begin:
 
 	mov	si, msg		; load address of our message
 	call	putstr		; print the message
+
+        call get_bootdriver
 
         ;svga到后面初始化
 	;call set_svga_mode

@@ -3,6 +3,7 @@
 #include <bootinfo.h>
 #include <syscfg.h>
 #include <gdt.h>
+#include <ntldr.h>
 
 // π¿º∆≥˝¡À’‚¿Ô”√“≤√ª±µƒµÿ∑Ω”√
 #define load_gdtr(n) \
@@ -28,8 +29,9 @@ void gdt_init(void)
   Gdt_SetEntry( 3, 0x0000, 0xFFFFF, DA_CR | DA_32 | DA_LIMIT_4K | DA_DPL3 );
   Gdt_SetEntry( 4, 0x0000, 0xFFFFF, DA_DRW | DA_LIMIT_4K | DA_32 | DA_DPL3 );
 
-  load_gdtr((DWORD)&gdtr); 
-  //__asm__ __volatile__ ( "lgdt %0" : "=m"( gdtr ) ) ; //ËΩΩÂÖ•GDTË°®
+  //load_gdtr((DWORD)&gdtr); 
+  __asm__ __volatile__ ( "lgdt %0" : "=m"( gdtr ) ) ; //ËΩΩÂÖ•GDTË°?
+  //NTLDR_HALT();
 }
 
 void Gdt_SetEntry(DWORD vector, DWORD base, DWORD limit, DWORD attribute )

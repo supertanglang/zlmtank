@@ -16,6 +16,9 @@
 #define	WORD	U16
 #define	DWORD	U32
 
+#define CHAR    char
+
+
 #define	NULL	0
 #define	TRUE	1
 #define	FALSE	0
