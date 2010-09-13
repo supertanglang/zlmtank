@@ -1,6 +1,7 @@
 set NTLDR_DIR=ntldr
 set LIBS_DIR=libs
-set COMPILER_FLAG=-fpack-struct -std=c99 -c -fno-builtin -gstabs+
+set FS_DIR=filesystem
+set COMPILER_FLAG=-fpack-struct -std=c99 -c -fno-builtin
 
 :clean
 
@@ -38,7 +39,12 @@ gcc %COMPILER_FLAG% ..\%NTLDR_DIR%\serial.c -o %NTLDR_DIR%\serial.o -I %CD%\..\i
 
 gcc %COMPILER_FLAG% ..\%NTLDR_DIR%\page.c -o %NTLDR_DIR%\page.o -I %CD%\..\include
 
-ld -o %NTLDR_DIR%\ntldr32.bin -Ttext 0x100000 -e ntldr_entry %NTLDR_DIR%\ntldr32.s %NTLDR_DIR%\ntldr32.o %LIBS_DIR%\stdlib.o %NTLDR_DIR%\vga.o %NTLDR_DIR%\gdt.o %NTLDR_DIR%\idt.o %NTLDR_DIR%\irq.o %NTLDR_DIR%\irq_s.s %NTLDR_DIR%\traps.o %NTLDR_DIR%\traps_s.s %NTLDR_DIR%\time.o %NTLDR_DIR%\serial.o %NTLDR_DIR%\page.o
+gcc %COMPILER_FLAG% ..\%NTLDR_DIR%\floppy.c -o %NTLDR_DIR%\floppy.o -I %CD%\..\include
+
+ld -o %NTLDR_DIR%\ntldr32.bin -Ttext 0x100000 -e ntldr_entry %NTLDR_DIR%\ntldr32.s %NTLDR_DIR%\ntldr32.o %LIBS_DIR%\stdlib.o %NTLDR_DIR%\vga.o %NTLDR_DIR%\gdt.o %NTLDR_DIR%\idt.o %NTLDR_DIR%\irq.o %NTLDR_DIR%\irq_s.s %NTLDR_DIR%\traps.o %NTLDR_DIR%\traps_s.s %NTLDR_DIR%\time.o %NTLDR_DIR%\serial.o %NTLDR_DIR%\page.o %LIBS_DIR%\syscall.o %NTLDR_DIR%\floppy.o %FS_DIR%\fat12.o
+
+nm -A %NTLDR_DIR%\ntldr32.bin > sym1.txt
+readelf -s %NTLDR_DIR%\ntldr32.bin > sym2.txt
 
 objcopy -R .note -R .comment -S -O binary %NTLDR_DIR%\ntldr32.bin %NTLDR_DIR%\ntldr32.out
 

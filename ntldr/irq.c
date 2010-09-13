@@ -172,7 +172,7 @@ static void unexpected(int irq)
 {
 	// 硬件中断处理程序类型原本是没有参数的。。。
 	// "Unexpected IRQ #%d\n"
-	//NTLDR_PRINTF("Unexpected IRQ #%d\n", irq);
+	NTLDR_PRINTF("Unexpected IRQ #%d\n", irq);
 	return;
 }
 
@@ -232,6 +232,10 @@ void irq_init(void)
 	// 初始化处理函数组，这里是自己赋值
 	for (i = 0; i < sizeof(irqfun) / sizeof(irqfun[0]); i++)
 		irqfun[i] = (IRQ_FUN)unexpected;
+	//设置系统调用
+extern int *systemcall;
+extern void irq_syscall(void);
+	idt_setusergate(SYSCALL_INT ,irq_syscall);
 	return;
 }
 
@@ -247,6 +251,7 @@ static void ackirq(int irq)
 		io_writebyte(IRQ_SLAVEBASE, ENABLEINT);
 	return;
 }
+extern void sc_null();
 
 // doirq(): 硬件中断处理 C 子程序
 // 本函数供 irq_s.asm 的汇编服务程序调用
@@ -255,8 +260,29 @@ void doirq(IDT_REGS regs)
 	irq_disableirq(regs.idx);
 	ackirq(regs.idx);
 	irq_disable();
-	irqfun[regs.idx]();
+	if (regs.idx == 0x80)
+	{
+		sc_null();
+	}
+	else
+	{
+		irqfun[regs.idx]();
+	}
 	irq_enable();
 	irq_enableirq(regs.idx);
 	return;
+}
+
+
+
+
+
+void* SystemCallTable[] = {
+	//0
+	sc_null
+};
+
+void sc_null()
+{
+	NTLDR_PRINTF("syscall: NULL");
 }

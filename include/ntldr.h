@@ -1,5 +1,6 @@
 #ifndef NTLDR_H
 #define NTLDR_H
+#include <types.h>
 #include <syscfg.h>
 
 //获取系统配置信息

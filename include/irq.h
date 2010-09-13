@@ -35,6 +35,8 @@ typedef enum {
 	IRQ_MAX = 15,	// 最大值
 } IRQ_NUM;
 
+#define SYSCALL_INT  0x80
+
 // 允许硬件中断 IRQn
 extern void irq_enableirq(IRQ_NUM n);
 

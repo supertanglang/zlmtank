@@ -12,6 +12,8 @@
 #include <time.h>
 #include <serial.h>
 #include <ntldr.h>
+#include <floppy.h>
+#include <fat.h>
 //刚刚进入c入口
 //此时我们在4M多一点点的位子
 //刚刚进入保护模式
@@ -32,6 +34,7 @@ SYSTEMCONFIG syscfg = {0};
 
 void ntldr_print_bootinfo();
 void ntldr_init_syscfg();
+void ntldr_test();
 
 
 void ntldr_main()
@@ -72,11 +75,20 @@ void ntldr_main()
 
   //初始化定时器
   timer_init();
+
+  floppy_init();
+
+  //fat12_init();
   
   SerialTest();
 
   irq_enable();
-  
+
+  for (int ii = 0; ii <16;ii++)
+  irq_enableirq(ii);
+
+  ntldr_test();
+
   for(;;);
   
   return;
@@ -140,7 +152,7 @@ void ntldr_print_bootinfo()
 
   NTLDR_DBG(" e820 : map num = %d \n",
   	     bootinfo->e820_map_num);
-
+/*
   for (ii = 0; ii < bootinfo->e820_map_num; ii++)
   {
     NTLDR_DBG(" e820: 0x%x%x, 0x%x%x, 0x%x\n",
@@ -150,7 +162,7 @@ void ntldr_print_bootinfo()
 		   map_item_ptr->mem_len_low32,
 		   map_item_ptr->mem_type);
   }
-
+*/
 
   // 打印各种指针
   NTLDR_DBG("KERNEL_BASE_LA=%x, KERNEL_BASE_PA=%x, size=%x\n",
@@ -214,4 +226,17 @@ void ntldr_init_syscfg()
   syscfg->linear_mem_max_size = SYSTEM_MAX_MEM_SIZE;
 
   // 从bootinfo里面获取启动的驱动器编号
+}
+
+#include <syscall.h>
+void ntldr_test()
+{
+  //syscall
+  syscall_null();
+
+  //floppy
+  BYTE buffer[512] = {0};
+  floppy_read(0, 1, buffer);
+  dumpmem(buffer,64);
+  
 }

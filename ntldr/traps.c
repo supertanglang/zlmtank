@@ -139,8 +139,8 @@ void doexception(IDT_REGS regs)
 		NTLDR_PRINTF("EAX: %08X  ECX: %08X  EDX: %08X  EBX: %08X\n", regs.eax, regs.ecx, regs.edx, regs.ebx);
 		NTLDR_PRINTF("ESP: %08X  EBP: %08X  ESI: %08X  EDI: %08X\n", regs.esp, regs.ebp, regs.esi, regs.edi);
 		NTLDR_PRINTF(" DS: %08X   ES: %08X   FS: %08X   GS: %08X\n", regs.ds, regs.es, regs.fs, regs.gs);
-		NTLDR_PRINTF("EIP: %08X   CS: %08X  uSP: %08X  uSS: %08X\n", regs.eip, regs.cs, regs.uesp, regs.uss);
-
+		NTLDR_PRINTF("EIP: %08X   CS: %08X   SP: %08X   SS: %08X\n", regs.eip, regs.cs, regs.uesp, regs.uss);
+		NTLDR_HALT();
 	/*
 	register unsigned long x;
 		__asm__ __volatile__ ("movl %%cr2,%0" : "=r" (x));

@@ -86,6 +86,7 @@ int snprintf(char *buf, size_t siz, char *fmt, ...);
 // 返回输出的字符数
 int printf(char *fmt, ...);
 
+void dumpmem(unsigned char *p, unsigned long len);
 
 int atoi_s(char **s);
 unsigned long atol(const unsigned char *s);
