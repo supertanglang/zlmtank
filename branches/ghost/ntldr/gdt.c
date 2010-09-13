@@ -30,7 +30,7 @@ void gdt_init(void)
   Gdt_SetEntry( 4, 0x0000, 0xFFFFF, DA_DRW | DA_LIMIT_4K | DA_32 | DA_DPL3 );
 
   //load_gdtr((DWORD)&gdtr); 
-  __asm__ __volatile__ ( "lgdt %0" : "=m"( gdtr ) ) ; //载入GDT�?
+  __asm__ __volatile__ ( "lgdt %0" : "=m"( gdtr ) ) ; //载入GDT表
   //NTLDR_HALT();
 }
 

@@ -102,6 +102,12 @@ void Idt_SetEntry(DWORD vector, BYTE desc_type, void* handler);
 #define idt_setintrgate(n, addr) \
 	Idt_SetEntry((n), DA_386IGate, (addr))
 
+// 设置系统调用，特权级 3
+
+#define idt_setusergate(n, addr) \
+	Idt_SetEntry((n), DA_386IGate, (addr))
+
+
 // 设置陷阱门，特权级 0
 //#define idt_settrapgate(n, addr) \
 //	idt_setgate((n), TYPE_TRAP, DPL_KERNEL, (unsigned)(addr))

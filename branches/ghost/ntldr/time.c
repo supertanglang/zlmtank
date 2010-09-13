@@ -97,12 +97,14 @@ void timer_getcmosdate(Date* d)
 //----------------------------------------------------------------------------------------------------------------------------------------
 void timer_interrupt_handler(void)
 {
+	int x,y;
 	if(clock_tick>=2^32-1)
-		clock_tick=0;
-
-	
+	{
+	clock_tick=0;
+	}
 	clock_tick++;
 	ntick++;
+
 	return;
 }
 

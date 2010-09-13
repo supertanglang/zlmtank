@@ -491,3 +491,104 @@ int printf(char *fmt, ...)
 	return i;
 }
 
+void dumpmem(unsigned char *p, unsigned long len)
+{
+	int byte_count = 0;
+
+	char buf[8] = {0};
+	char *pbuf = (char *)buf;
+	long buf_c = 0;
+
+	unsigned char *tmp_line_add;
+	tmp_line_add = p;
+
+	//misc_printf("cmd=%s, arg1=%s, arg2 = %s", argv[0],argv[1],argv[2]);
+	
+	printf("dump memory from 0x%x, %d bytes len:\n",p,len);
+
+
+	while(len !=0)
+	{
+
+		//if newline
+	  switch (byte_count)
+	  {
+
+
+		case 9:
+		{
+			//prrint ascii sections
+			printf("   ");
+			pbuf =(char *) buf;
+			while(buf_c != 0)
+			{
+				if((*pbuf < 0x20) || (*pbuf  >0x7f))
+				{
+					printf(".");
+				
+				}else{
+
+					if( *pbuf == '\\')
+					{
+						printf("\\");
+						
+					}else if( *pbuf == '\"')
+					{
+						printf("\"");
+						
+					}else if( *pbuf == '\'')
+					{
+						printf("\'");
+						
+					}else{
+						
+					printf("%c",*pbuf);
+					}
+				}
+				buf_c--;
+				pbuf++;
+			}
+
+			//end print ascii
+
+			printf("\n");
+			byte_count = 0;
+			break;
+		}
+
+
+		case 0:
+		{
+			
+			tmp_line_add = p;
+			printf("0x%08x  ", tmp_line_add);
+			byte_count = byte_count +1;
+			break;
+		}
+
+		case 5:
+	  	{
+			printf("    ");
+		}
+		default:
+		{
+
+			
+
+		printf("0x%02x ",(unsigned char)(*p));
+		buf[buf_c] = *p;
+		buf_c ++;
+		byte_count++;
+		p++;
+		len--;
+		break;
+		}
+	  }
+
+	}
+
+
+
+	
+}
+
